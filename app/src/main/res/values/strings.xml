@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">VidaConcurseiro</string>
-    <string name="action_settings">Settings</string>
-    <string name="ok">OK</string>
     <string name="title_activity_texto">Texto</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="TextosFragment">Exemplor de texto aqui, ajkljfklkldfjdksljf sjfklsjfklj sldjkfdsj djkkldj</string>
 </resources>

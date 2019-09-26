@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".MainActivity"
+        android:visibility="visible"
+
+        >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        >
+
+        <TextView
+            android:id="@+id/texto1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layoutDirection="inherit"
+            android:text="@string/TextosFragment"
+            android:textSize="@dimen/alternativas"
+
+            />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/texto1"
+            android:layout_alignStart="@id/texto1"
+            android:layout_centerInParent="false"
+            app:srcCompat="@mipmap/idecan2016q13"
+            />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnFechar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/texto1"
+
+            android:layout_alignParentStart="false"
+            android:layout_alignParentEnd="true"
+
+            android:layout_marginTop="17dp"
+            android:layout_marginEnd="241dp"
+
+            android:src="@android:drawable/ic_delete"
+
+            app:backgroundTint="#009688"
+            app:backgroundTintMode="add"
+            app:borderWidth="5dp"
+            app:elevation="0dp"
+            app:fabCustomSize="40dp"
+            app:fabSize="auto"
+            app:maxImageSize="20dp"
+            app:pressedTranslationZ="@dimen/fab_margin"
+
+            app:showMotionSpec="@android:anim/cycle_interpolator"
+            app:useCompatPadding="true" />
+    </RelativeLayout>
+</FrameLayout>

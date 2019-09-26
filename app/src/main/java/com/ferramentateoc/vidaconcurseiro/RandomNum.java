@@ -1,24 +1,33 @@
 package com.ferramentateoc.vidaconcurseiro;
 
+import androidx.annotation.NonNull;
+
 import java.util.Random;
 
-public class RandomNum extends Random {
-    private int valor;
+public class RandomNum{
+    //private int valor;
 
-    public int getValor() {
-        return valor;
+    public int randomNum(){
+        //super();
+        return geradorRandomico();
     }
 
-    private void setValor(int a){
-        this.valor =  a;
+    private int getValor() {
+
+        return 0;
     }
 
-    public int gergadorNumerico(){
+    private void setValor(){
+             //this.valor = getValor();
+    }
+
+    private int geradorRandomico(){
         int a;
+        Random random = new Random();
        do{
-           a = this.nextInt() / 100000000;
-       }while (a<1);
-        setValor(a);
-        return getValor();
+           a = random.nextInt() / 100000000;
+       }while (a<1 && a>40);
+
+        return a;
     }
 }

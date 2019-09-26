@@ -1,45 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/tool"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <LinearLayout
+            android:id="@+id/btnsFlag4"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-    android:id="@+id/fab"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="top|end"
-    android:layout_margin="@dimen/fab_margin"
-    app:srcCompat="@android:drawable/ic_menu_gallery" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/gerador"
-        android:layout_height="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_gravity="top|center_vertical"
-        app:backgroundTint="@color/random"
-        app:srcCompat="@android:drawable/ic_menu_rotate"
-        />
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="250dp">
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabImagens"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:visibility="visible"
+            app:srcCompat="@android:drawable/ic_menu_gallery" />
 
-
-
-    <include layout="@layout/content_main" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabTexto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:visibility="visible"
+            app:srcCompat="@android:drawable/ic_menu_sort_alphabetically" />
+    </RelativeLayout>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/gerador"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            app:backgroundTint="@color/random"
+            app:srcCompat="@android:drawable/ic_menu_rotate" />
+        </LinearLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:visibility="invisible">
+        <include  layout="@layout/fragment_tela_imagem" />
+    </FrameLayout>
+    <androidx.appcompat.widget.ActionMenuView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="visible"
+        android:layout_marginTop="55dp"
+        app:layout_anchor="@id/tool"
+        app:layout_anchorGravity="center"
+        >
+        <include
+            layout="@layout/content_main"
+            />
+    </androidx.appcompat.widget.ActionMenuView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

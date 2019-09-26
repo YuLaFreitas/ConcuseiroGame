@@ -1,148 +1,173 @@
 package com.ferramentateoc.vidaconcurseiro;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import androidx.annotation.RequiresApi;
-
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class MainActivity extends Activity  {
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+public class MainActivity extends AppCompatActivity {
 
     Cadernos cadernos = new Cadernos();
-    RandomNum randomNum = new RandomNum();
-    int n;
-
-
-    //private GestureDetector detector = null;
-   @Override
-    public void onSaveInstanceState(Bundle saved) {
-        saved.putInt("valor", randomNum.getValor());
-        super.onSaveInstanceState(saved);
-   }
+   // int n;
 
     @Override
-    protected void onCreate(final Bundle saved) {
-        super.onCreate(saved);
-        setContentView(R.layout.activity_texto);
+    public void onSaveInstanceState(Bundle saved) {
+        saved.getBundle(String.valueOf(saved));
+        super.onSaveInstanceState(saved);
     }
-    //É chamado pelo onCliclk
-    public  void comecar(){
 
+    @Override
+    protected void onCreate(final Bundle onSaveInstanceState) {
+        super.onCreate(onSaveInstanceState);
+        setContentView(R.layout.activity_texto);  }
+
+    //É chamado pelo onCliclk
+    public void comecar() {
         setContentView(R.layout.activity_main);
 
-        final FloatingActionButton botaoGerar = findViewById(R.id.gerador);
-        final FloatingActionButton fab = findViewById(R.id.fab);
-        fab.hide();
-
-
-        randomNum.gergadorNumerico();
-        alterar(randomNum.getValor());
+        botaoGerarNumero();
+        ///////primeira tela após abertura
+        alterarElementosLayout(geradorNumAleatorio());
         cadernos.idecan2016("q");
-        padraoOriginalObjetos();
-        fab.show();
+        limpaRadioButton();
 
-        botaoGerar.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                fab.hide();
-                padraoOriginalObjetos();
+    }
+    //associado ao comecar()
+    private void botaoGerarNumero(){
 
-                n = randomNum.gergadorNumerico();
-                alterar(n);
-                Context context = v.getContext();
-                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+        FloatingActionButton btnGeradorNumerico = findViewById(R.id.gerador);
 
-                String teste = cadernos.idecan2016("txt");
-                if(!teste.equals("")){
-                    fabTex();
-                    fab.show();
-                }
+        btnGeradorNumerico.setOnClickListener(new View.OnClickListener() {
 
-                alertDialog.setNegativeButton("FECHAR", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        closeContextMenu();
-                    }
-                });
+
+            @Override
+            public void onClick(View v) {
+
+                limpaRadioButton();
+
+                do {
+
+                    int n = geradorNumAleatorio();
+                    botaoImagem(n);
+
+                }while (cadernos.idecan2016("q").isEmpty());
+
 
             }
         });
-
-        View.getDefaultSize(R.dimen.alternativas, R.color.alternativas);
     }
 
-    //botão flutuante do texto da questão
-    private void fabTex(){
-        FloatingActionButton fab = findViewById(R.id.fab);
 
-            fab.setOnClickListener(new View.OnClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.O)
-                @Override
-                public void onClick(View view) {
-
-                    Context context = view.getContext();
-                    final AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
-
-                    switch (cadernos.idecan2016("txt")){
-
-                        case "txt13":
-                            alertDialog.setMessage(cadernos.idecan2016("txt"));
-                            alertDialog.setIcon(R.mipmap.idecan2016q13);
-                            alertDialog.setNegativeButton("FECHAR", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) { closeContextMenu();}
-                            });
-                            alertDialog.show();
-                            break;
-                        case "txt14":
-                            alertDialog.setMessage(cadernos.idecan2016("txt"));
-                            alertDialog.setIcon(R.mipmap.idecan2016q14);
-                            alertDialog.setNegativeButton("FECHAR", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) { closeContextMenu();}
-                            });
-
-                            alertDialog.show();
-                            break;
-                        case "txt30":
-                            alertDialog.setMessage(cadernos.idecan2016("txt"));
-                            alertDialog.setIcon(R.mipmap.idecan2016q30);
-                            alertDialog.setNegativeButton("FECHAR", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) { closeContextMenu();}
-                            });
-
-                            alertDialog.show();
-                            break;
-                            default:
-                                alertDialog.setMessage(cadernos.idecan2016("txt"));
-                                alertDialog.setNegativeButton("FECHAR", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) { closeContextMenu();}
-                                });
-                                alertDialog.show();
-                                break;
-
-                    }
-                }
-            });
+    private int geradorNumAleatorio() {
+            RandomNum classRadom = new RandomNum();
+            int rN = classRadom.randomNum();
+        alterarElementosLayout(rN);
+            return rN;
         }
 
+    //associado ao geradorNumAleatio()
+    private void botaoImagem(final int rN){
+        FloatingActionButton botao = findViewById(R.id.fabImagens);
+        final FloatingActionButton txt = findViewById(R.id.fabTexto);
+        alterarElementosLayout(rN);
 
-   //vinculado no botãoGerar
-    public void padraoOriginalObjetos(){
+        final String redacao = cadernos.idecan2016("txt");
+
+        if ((rN == 13) || (rN == 14) || (rN == 30)) {
+            botao.show();
+            txt.hide();
+
+            botao.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    LinearLayout questao = findViewById(R.id.questao);
+                    questao.setVisibility(View.INVISIBLE);
+                    AppBarLayout tool = findViewById(R.id.tool);
+                    tool.setVisibility(View.INVISIBLE);
+                    tool.setExpanded(false, true);
+
+                    FloatingActionButton voltarMAN = findViewById(R.id.btnFechar);
+
+                    FrameLayout frameLayout = findViewById(R.id.frameLayout);
+                    frameLayout.setVisibility(View.VISIBLE);
+                    frameLayout.setRight(View.LAYER_TYPE_HARDWARE);
+                    frameLayout.setLeft(View.LAYER_TYPE_HARDWARE);
+
+
+
+
+                        int image = 0;
+
+                        switch (rN) {
+                            case 13:image = R.mipmap.idecan2016q13;break;
+                            case 14:image=R.mipmap.idecan2016q14;break;
+                            case 30:image=R.mipmap.idecan2016q30;break;
+                        }
+
+                    final TextView texto1 = findViewById(R.id.texto1);
+                    final ImageView imagem = findViewById(R.id.image);
+
+                    texto1.setText(redacao);
+                    imagem.setImageResource(image);
+
+                    voltarMAN.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            FrameLayout frameLayout = findViewById(R.id.frameLayout);
+                            frameLayout.setVisibility(View.INVISIBLE);
+                            LinearLayout questao = findViewById(R.id.questao);
+                            questao.setVisibility(View.VISIBLE);
+                            AppBarLayout tool = findViewById(R.id.tool);
+                            tool.setVisibility(View.VISIBLE);
+                            tool.setExpanded(true, true);
+
+                        }
+                    });
+                    }
+        });
+        }else{botaoTexto(redacao);}
+    }
+
+    //associado ao botaoImagem()
+    private void botaoTexto(final String txto) {
+        FloatingActionButton botao = findViewById(R.id.fabImagens);
+        FloatingActionButton txt = findViewById(R.id.fabTexto);
+        botao.hide();
+        txt.show();
+
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        txt.setOnClickListener(new View.OnClickListener() {
+                                   @Override
+                                   public void onClick(final View v) {
+
+                                       alertDialog.setMessage(txto);
+                                       alertDialog.setNegativeButton("FECHAR", new DialogInterface.OnClickListener() {
+                                           @Override
+                                           public void onClick(DialogInterface dialog, int which) {
+                                               closeContextMenu();
+                                           }
+                                       });
+                                       alertDialog.show();
+                                   }
+                               });
+    }
+
+    //vinculado no botãoGerar
+    public void limpaRadioButton() {
         final TextView textView = findViewById(R.id.certo);
         final RadioButton letraA = findViewById(R.id.LetraA);
         final RadioButton letraB = findViewById(R.id.LetraB);
@@ -161,17 +186,16 @@ public class MainActivity extends Activity  {
         letraD.setTextSize(getResources().getDimension(R.dimen.alternativas));
         letraE.setTextColor(getResources().getColor(R.color.alternativas));
         letraE.setTextSize(getResources().getDimension(R.dimen.alternativas));
+
+
+        View.getDefaultSize(R.dimen.alternativas, R.color.alternativas);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+    //vinculado no botãoGerar()
+    public void alterarElementosLayout(final int n ){
 
+        cadernos.setNumero(n);
 
-    public void  alterar(int n){
         final RadioButton letraA = findViewById(R.id.LetraA);
         final RadioButton letraB = findViewById(R.id.LetraB);
         final RadioButton letraC = findViewById(R.id.LetraC);
@@ -181,12 +205,12 @@ public class MainActivity extends Activity  {
         final TextView text = findViewById(R.id.enuciado);
         final RadioGroup radioGroup = findViewById(R.id.quatro);
 
-        cadernos.setNumero(n);
-
         TextView resultado = findViewById(R.id.certo);
         resultado.setVisibility(View.INVISIBLE);
+
         radioGroup.setVisibility(View.VISIBLE);
         radioGroup.clearCheck();
+
         text.setText(cadernos.idecan2016("q"));
         letraA.setText(cadernos.idecan2016("A"));
         letraB.setText(cadernos.idecan2016("B"));
@@ -194,10 +218,11 @@ public class MainActivity extends Activity  {
         letraD.setText(cadernos.idecan2016("D"));
         letraE.setText(cadernos.idecan2016("E"));
     }
+
     public void onClick(View v) {
-       if(v.getId()==R.id.button){
-           comecar();
-       }
+        if (v.getId() == R.id.button) {
+            comecar();
+        }
 
         TextView resultado = findViewById(R.id.certo);
         resultado.setVisibility(View.VISIBLE);
@@ -205,25 +230,25 @@ public class MainActivity extends Activity  {
 
         String[] gabaritoIdecan2016 = {
 
-                "","B","C","D","B","C",
-                "D","D","C","A","D","B",
-                "C","C","B","A","A","C",
-                "A","C","D","D","A","D",
-                "C","D","C","B","A","A","A"
+                "", "B", "C", "D", "B", "C",
+                "D", "D", "C", "A", "D", "B",
+                "C", "C", "B", "A", "A", "C",
+                "A", "C", "D", "D", "A", "D",
+                "C", "D", "C", "B", "A", "A", "A"
 
         };
 
         String[] gabaritoIdecan2009 = {
 
-                "","C", "A", "A", "C", "E", "D", "C", "B", "D", "C", "C",
+                "", "C", "A", "A", "C", "E", "D", "C", "B", "D", "C", "C",
                 "D", "D", "B", "B", "B", "E", "D", "D", "A", "A", "#",
                 "D", "E", "C", "D", "B", "B", "E", "E", "E", "B", "D",
                 "C", "C", "B", "E", "D", "C", "A"
         };
-        n= randomNum.getValor();
-        String certa=gabaritoIdecan2016[n];
+       int n =1;// randomNum.getValor();
+        String certa = gabaritoIdecan2016[n];
 
-        switch (v.getId()){
+        switch (v.getId()) {
 
             case R.id.LetraA:
                 resultado.setText(conferir("A", certa, R.id.LetraA));
@@ -241,38 +266,24 @@ public class MainActivity extends Activity  {
                 resultado.setText(conferir("E", certa, R.id.LetraE));
                 break;
         }
-           }
-
-        //vinculado ao onClick()
-    @SuppressLint("ResourceAsColor")
-    public String conferir(String escolha, String correto, int id){
-
-       String word="";
-        if(escolha.equals(correto)) {
-        TextView resultado = findViewById(id);
-
-        resultado.setTextColor(R.color.RespostaCerta);
-        resultado.setTextSize(20);
-        word = "Resposta certa";}
-
-        if(!escolha.equals(correto))word = "Gabarito é " + correto;
-        return  word;
-
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    //vinculado ao onClick()
+    @SuppressLint("ResourceAsColor")
+    public String conferir(String escolha, String correto, int id) {
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        String word = "";
+        if (escolha.equals(correto)) {
+            TextView resultado = findViewById(id);
+
+            resultado.setTextColor(R.color.RespostaCerta);
+            resultado.setTextSize(20);
+            word = "Resposta certa";
         }
 
-        return super.onOptionsItemSelected(item);
+        if (!escolha.equals(correto)) word = "Gabarito é " + correto;
+        return word;
+
     }
 
     @Override
@@ -284,7 +295,7 @@ public class MainActivity extends Activity  {
     @Override
     protected void onStop() {
         super.onStop();
-        n = randomNum.getValor();
+        //int n = randomNum.getValor();
     }
 
     @Override
@@ -292,6 +303,4 @@ public class MainActivity extends Activity  {
         super.onDestroy();
         finish();
     }
-
-
 }
