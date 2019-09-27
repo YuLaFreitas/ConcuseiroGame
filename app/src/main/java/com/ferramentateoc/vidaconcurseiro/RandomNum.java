@@ -12,17 +12,17 @@ public class RandomNum{
         return geradorRandomico();
     }
 
-    private int getValor() {
+    public int getValor() {
 
-        return 0;
+        return a;
     }
 
     private void setValor(){
              //this.valor = getValor();
     }
-
+    int a;
     private int geradorRandomico(){
-        int a;
+
         Random random = new Random();
        do{
            a = random.nextInt() / 100000000;

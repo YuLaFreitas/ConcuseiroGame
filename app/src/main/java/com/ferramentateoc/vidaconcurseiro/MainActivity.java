@@ -1,6 +1,7 @@
 package com.ferramentateoc.vidaconcurseiro;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
@@ -9,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,11 +19,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.Method;
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity {
-
+    RandomNum classRadom = new RandomNum();
     Cadernos cadernos = new Cadernos();
-   // int n;
-
+    int rN;
     @Override
     public void onSaveInstanceState(Bundle saved) {
         saved.getBundle(String.valueOf(saved));
@@ -32,57 +36,83 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(final Bundle onSaveInstanceState) {
         super.onCreate(onSaveInstanceState);
-        setContentView(R.layout.activity_texto);  }
+        setContentView(R.layout.capa);  }
 
     //É chamado pelo onCliclk
     public void comecar() {
         setContentView(R.layout.activity_main);
+        TextView tool = findViewById(R.id.textTool);
+        tool.setText("IDECAN/2016");
+        tool.setTextColor(getResources().getColor(R.color.design_default_color_primary_dark));
 
-        botaoGerarNumero();
+       botaoGerarNumero();
         ///////primeira tela após abertura
-        alterarElementosLayout(geradorNumAleatorio());
-        cadernos.idecan2016("q");
-        limpaRadioButton();
+       // normalizarElementosLayout(geradorNumAleatorio());
+       // cadernos.idecan2016("q");
+       // limpaRadioButton();
 
     }
-    //associado ao comecar()
-    private void botaoGerarNumero(){
 
+    //associado ao comecar()
+    private int botaoGerarNumero() {
         FloatingActionButton btnGeradorNumerico = findViewById(R.id.gerador);
 
-        btnGeradorNumerico.setOnClickListener(new View.OnClickListener() {
+        //final int n=0;
 
+            btnGeradorNumerico.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-            @Override
-            public void onClick(View v) {
+                        limpaRadioButton();
 
-                limpaRadioButton();
+                        botaoImagem(numero());
 
-                do {
+                    }
 
-                    int n = geradorNumAleatorio();
-                    botaoImagem(n);
+                    public int numero() {
+                        int a;
+                        do {
+                            a = geradorNumAleatorio();
+                        } while (cadernos.idecan2016("q").isEmpty());
 
-                }while (cadernos.idecan2016("q").isEmpty());
+                        return a;
+                    }
+                //}
+                });
 
+        ;
 
-            }
-        });
+        return rN;
+                //n[0];
+        //a[0];
+                 //1;
+            //(int) a[0];
     }
 
+    public int numeroCaderno() {
+        Random random = new Random();
+        int caderno;
+        do {
+        caderno = random.nextInt() / 1000000000;
+        }   while (caderno==1||caderno==2);
+
+        return caderno;
+    }
 
     private int geradorNumAleatorio() {
-            RandomNum classRadom = new RandomNum();
-            int rN = classRadom.randomNum();
-        alterarElementosLayout(rN);
-            return rN;
+       // vindulado a :onClick
+            rN = classRadom.randomNum();
+            int a=rN;
+        normalizarElementosLayout(a);
+
+            return a;
         }
 
-    //associado ao geradorNumAleatio()
     private void botaoImagem(final int rN){
+        //associado ao geradorNumAleatio()
         FloatingActionButton botao = findViewById(R.id.fabImagens);
         final FloatingActionButton txt = findViewById(R.id.fabTexto);
-        alterarElementosLayout(rN);
+        normalizarElementosLayout(rN);
 
         final String redacao = cadernos.idecan2016("txt");
 
@@ -140,34 +170,40 @@ public class MainActivity extends AppCompatActivity {
                     }
         });
         }else{botaoTexto(redacao);}
+
     }
 
-    //associado ao botaoImagem()
+
     private void botaoTexto(final String txto) {
+        //associado ao botaoImagem()
         FloatingActionButton botao = findViewById(R.id.fabImagens);
         FloatingActionButton txt = findViewById(R.id.fabTexto);
-        botao.hide();
-        txt.show();
+        if (!txto.isEmpty()) {
 
-        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        txt.setOnClickListener(new View.OnClickListener() {
-                                   @Override
-                                   public void onClick(final View v) {
+            botao.hide();
+            txt.show();
 
-                                       alertDialog.setMessage(txto);
-                                       alertDialog.setNegativeButton("FECHAR", new DialogInterface.OnClickListener() {
-                                           @Override
-                                           public void onClick(DialogInterface dialog, int which) {
-                                               closeContextMenu();
-                                           }
-                                       });
-                                       alertDialog.show();
-                                   }
-                               });
+            final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            txt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+
+                    alertDialog.setMessage(txto);
+                    alertDialog.setNegativeButton("FECHAR", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            closeContextMenu();
+                        }
+                    });
+                    alertDialog.show();
+                }
+            });
+        }else{botao.hide(); txt.hide();}
     }
 
-    //vinculado no botãoGerar
+
     public void limpaRadioButton() {
+        //vinculado no botãoGerar
         final TextView textView = findViewById(R.id.certo);
         final RadioButton letraA = findViewById(R.id.LetraA);
         final RadioButton letraB = findViewById(R.id.LetraB);
@@ -191,10 +227,27 @@ public class MainActivity extends AppCompatActivity {
         View.getDefaultSize(R.dimen.alternativas, R.color.alternativas);
     }
 
-    //vinculado no botãoGerar()
-    public void alterarElementosLayout(final int n ){
+    //vinculado ao onClick()
+    @SuppressLint("ResourceAsColor")
+    public String conferir(String escolha, String correto, int id) {
 
-        cadernos.setNumero(n);
+        String word = "";
+        if (escolha.equals(correto)) {
+            TextView resultado = findViewById(id);
+
+            resultado.setTextColor(R.color.RespostaCerta);
+            resultado.setTextSize(20);
+            word = "CERTO, MAIS...";
+        }
+
+        if (!escolha.equals(correto)) word = "No gabarito é " + correto;
+        return word;
+
+    }
+
+
+    public void normalizarElementosLayout(final int n ){
+        //vinculado no geradorNumAleatorio()
 
         final RadioButton letraA = findViewById(R.id.LetraA);
         final RadioButton letraB = findViewById(R.id.LetraB);
@@ -206,83 +259,187 @@ public class MainActivity extends AppCompatActivity {
         final RadioGroup radioGroup = findViewById(R.id.quatro);
 
         TextView resultado = findViewById(R.id.certo);
+        resultado.setTextSize(1);
         resultado.setVisibility(View.INVISIBLE);
 
         radioGroup.setVisibility(View.VISIBLE);
         radioGroup.clearCheck();
 
-        text.setText(cadernos.idecan2016("q"));
-        letraA.setText(cadernos.idecan2016("A"));
-        letraB.setText(cadernos.idecan2016("B"));
-        letraC.setText(cadernos.idecan2016("C"));
-        letraD.setText(cadernos.idecan2016("D"));
-        letraE.setText(cadernos.idecan2016("E"));
+
+
+        //switch (numeroCaderno()) {
+           //case 1:
+                cadernos.setNumero(n);
+                text.setText(cadernos.idecan2016("q"));
+                letraA.setText(cadernos.idecan2016("A"));
+                letraB.setText(cadernos.idecan2016("B"));
+                letraC.setText(cadernos.idecan2016("C"));
+                letraD.setText(cadernos.idecan2016("D"));
+                letraE.setText(cadernos.idecan2016("E"));
+             //   break;
+
+         /*   case 2:
+                cadernos.setNumero(n);
+                text.setText(cadernos.idecan2009("q"));
+                letraA.setText(cadernos.idecan2009("A"));
+                letraB.setText(cadernos.idecan2009("B"));
+                letraC.setText(cadernos.idecan2009("C"));
+                letraD.setText(cadernos.idecan2009("D"));
+                letraE.setText(cadernos.idecan2009("E"));
+                break;
+        }*/
     }
 
-    public void onClick(View v) {
-        if (v.getId() == R.id.button) {
+    public void onClick2(View v){
             comecar();
-        }
+            onClick(v);
+    }
 
-        TextView resultado = findViewById(R.id.certo);
+        //GABARITO AQUI
+    public void onClick(View v) {
+
+        ContentValues idecan2019 = new ContentValues();
+
+        idecan2019.put( "1","B");
+        idecan2019.put( "2","C");
+        idecan2019.put( "3","C");
+        idecan2019.put( "4","D");
+        idecan2019.put( "5","C");
+        idecan2019.put( "6","D");
+        idecan2019.put( "7","D");
+        idecan2019.put( "8","C");
+        idecan2019.put( "9","A");
+        idecan2019.put( "10","D");
+        idecan2019.put( "11","B");
+        idecan2019.put( "12","C");
+        idecan2019.put( "13","C");
+        idecan2019.put( "14","B");
+        idecan2019.put( "15","A");
+        idecan2019.put( "16","A");
+        idecan2019.put( "17","C");
+        idecan2019.put( "18","A");
+        idecan2019.put( "19","C");
+        idecan2019.put( "20","D");
+        idecan2019.put( "21","D");
+        idecan2019.put( "22","A");
+        idecan2019.put( "23","D");
+        idecan2019.put( "24","C");
+        idecan2019.put( "25","D");
+        idecan2019.put( "26","C");
+        idecan2019.put( "27","B");
+        idecan2019.put( "28","A");
+        idecan2019.put( "29","A");
+        idecan2019.put( "30","A");
+
+        ContentValues idecan2006 = new ContentValues();
+        idecan2006.put( "1","C");
+        idecan2006.put( "2"," A");
+        idecan2006.put( "3"," A");
+        idecan2006.put( "4"," C");
+        idecan2006.put( "5"," E");
+        idecan2006.put( "6"," D");
+        idecan2006.put( "7"," C");
+        idecan2006.put( "8"," B");
+        idecan2006.put( "9"," D");
+        idecan2006.put( "10"," C");
+        idecan2006.put( "11"," C");
+        idecan2006.put( "12","D");
+        idecan2006.put( "13"," D");
+        idecan2006.put( "14"," B");
+        idecan2006.put( "15"," B");
+        idecan2006.put( "16"," B");
+        idecan2006.put( "17"," E");
+        idecan2006.put( "18"," D");
+        idecan2006.put( "19"," D");
+        idecan2006.put( "20"," A");
+        idecan2006.put( "21"," A");
+        idecan2006.put( "22"," #");
+        idecan2006.put( "23","D");
+        idecan2006.put( "24"," E");
+        idecan2006.put( "25"," C");
+        idecan2006.put( "26"," D");
+        idecan2006.put( "27"," B");
+        idecan2006.put( "28"," B");
+        idecan2006.put( "29"," E");
+        idecan2006.put( "30"," E");
+        idecan2006.put( "31"," E");
+        idecan2006.put( "32"," B");
+        idecan2006.put( "33"," D");
+        idecan2006.put( "34","C");
+        idecan2006.put( "35"," C");
+        idecan2006.put( "36"," B");
+        idecan2006.put( "37"," E");
+        idecan2006.put( "38"," D");
+        idecan2006.put( "39"," C");
+        idecan2006.put( "40"," A");
+
+        String certa = idecan2019.getAsString("" + rN);
+
+        final TextView resultado = findViewById(R.id.certo);
         resultado.setVisibility(View.VISIBLE);
         resultado.setTextSize(30);
-
-        String[] gabaritoIdecan2016 = {
-
-                "", "B", "C", "D", "B", "C",
-                "D", "D", "C", "A", "D", "B",
-                "C", "C", "B", "A", "A", "C",
-                "A", "C", "D", "D", "A", "D",
-                "C", "D", "C", "B", "A", "A", "A"
-
-        };
-
-        String[] gabaritoIdecan2009 = {
-
-                "", "C", "A", "A", "C", "E", "D", "C", "B", "D", "C", "C",
-                "D", "D", "B", "B", "B", "E", "D", "D", "A", "A", "#",
-                "D", "E", "C", "D", "B", "B", "E", "E", "E", "B", "D",
-                "C", "C", "B", "E", "D", "C", "A"
-        };
-       int n =1;// randomNum.getValor();
-        String certa = gabaritoIdecan2016[n];
-
         switch (v.getId()) {
 
-            case R.id.LetraA:
+                case R.id.LetraA:
+                    resultado.setText(conferir("A", certa, R.id.LetraA));
+                             //"" +certa);
+                    break;
+                case R.id.LetraB:
+                    resultado.setText(conferir("B", certa, R.id.LetraB));
+                            //"" +certa);
+                    break;
+                case R.id.LetraC:
+                    resultado.setText(conferir("C", certa, R.id.LetraC));
+                           // "" +certa);
+                    break;
+                case R.id.LetraD:
+                    resultado.setText(conferir("D", certa, R.id.LetraD));
+                          //  "" +certa);
+                    break;
+                case R.id.LetraE:
+                    resultado.setText(conferir("E", certa, R.id.LetraE));
+                           // "" +certa);
+                    break;
+            }
+             /*
+
+            /* RadioButton lA = (RadioButton) this.findViewById(R.id.LetraA);
+        RadioButton lB = (RadioButton) this.findViewById(R.id.LetraB);
+        RadioButton lC = (RadioButton) this.findViewById(R.id.LetraC);
+        RadioButton lD = (RadioButton) this.findViewById(R.id.LetraD);
+        RadioButton lE = (RadioButton) this.findViewById(R.id.LetraE);
+
+
+        lA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 resultado.setText(conferir("A", certa, R.id.LetraA));
-                break;
-            case R.id.LetraB:
-                resultado.setText(conferir("B", certa, R.id.LetraB));
-                break;
-            case R.id.LetraC:
-                resultado.setText(conferir("C", certa, R.id.LetraC));
-                break;
-            case R.id.LetraD:
-                resultado.setText(conferir("D", certa, R.id.LetraD));
-                break;
-            case R.id.LetraE:
-                resultado.setText(conferir("E", certa, R.id.LetraE));
-                break;
-        }
-    }
-
-    //vinculado ao onClick()
-    @SuppressLint("ResourceAsColor")
-    public String conferir(String escolha, String correto, int id) {
-
-        String word = "";
-        if (escolha.equals(correto)) {
-            TextView resultado = findViewById(id);
-
-            resultado.setTextColor(R.color.RespostaCerta);
-            resultado.setTextSize(20);
-            word = "Resposta certa";
-        }
-
-        if (!escolha.equals(correto)) word = "Gabarito é " + correto;
-        return word;
+            }
+        });
+        lB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resultado.setText(conferir("B", certa, R.id.LetraA));
+            }
+        });
+        lC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resultado.setText(conferir("C", certa, R.id.LetraA));
+            }
+        });
+        lD.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resultado.setText(conferir("D", certa, R.id.LetraA));
+            }
+        });
+        lE.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resultado.setText(conferir("E", certa, R.id.LetraA));
+            }
+        });*/
 
     }
 

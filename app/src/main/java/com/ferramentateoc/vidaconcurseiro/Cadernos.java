@@ -13,12 +13,12 @@ public class Cadernos {
  public int getNumero(){
   return a;
  }
-/*
+
  public String idecan2009(String tipo) {
 
-  wordKeyEnt = tipo + getNumero();
-  String wordKeySai = null;
-      switch (wordKeyEnt) {
+     String wordKeyEnt = tipo + getNumero();
+     String wordKeySai = null;
+     switch (wordKeyEnt) {
 
  case "txt1":
  wordKeySai= "<p> <a href=www.jw.org>TEXTO:  Aborto – A realidade dos consultórios </a></p>"
@@ -199,7 +199,7 @@ public class Cadernos {
  case "A28": wordKeySai="<p>A) É o processo de desenvolver qualidades nos recursos humanos para habilitá-los a serem mais produtivos e contribuir melhor para o alcance dos objetivos organizacionais. </p>" ; break;
  case "B28": wordKeySai="<p>B) O treinamento funciona como uma espécie de filtro, permitindo que apenas algumas pessoas possam ingressar na organização: as que apresentam características desejadas pela organização. </p>" ; break;
  case "C28": wordKeySai="<p>C) É o processo de ensinar aos novos empregados as habilidades básicas que pessoas necessitam para desempenhar seus cargos. </p>" ; break;
- case "D28": wordKeySai="<p>D) É o processo sistemático de alterarElementosLayout o comportamento dos empregados na direção do alcance dos objetivos <br>organizacionais. O treinamento está relacionado com as atuais habilidades e capacidades exigidas pelo cargo. </p>" ; break;
+ case "D28": wordKeySai="<p>D) É o processo sistemático de normalizarElementosLayout o comportamento dos empregados na direção do alcance dos objetivos <br>organizacionais. O treinamento está relacionado com as atuais habilidades e capacidades exigidas pelo cargo. </p>" ; break;
  case "E28": wordKeySai="<p>E) É o processo educacional de curto prazo e aplicado de maneira sistemática e organizada, por meio do qual as pessoas aprendem conhecimentos, atitudes e habilidades em função de objetivos definidos. </p>" ; break;
  case "q29": wordKeySai="<p>29) A despesa extraorçamentária é aquela que: </p>" ; break;
  case "A29": wordKeySai="<p>A) Depende de autorização legislativa. </p>" ; break;
@@ -285,7 +285,7 @@ if(wordKeySai==""){
     wordKeySai="";
 }
     return Html.fromHtml(wordKeySai).toString();
- }*/
+ }
 
     public String idecan2016(String tipo){
         String wordKeyEnt = tipo + getNumero();

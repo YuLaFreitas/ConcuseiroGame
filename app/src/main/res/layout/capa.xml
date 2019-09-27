@@ -9,6 +9,6 @@
         android:layout_width="410dp"
         android:layout_height="700dp"
         android:background="@color/design_default_color_primary"
-        android:onClick="onClick"
+        android:onClick="onClick2"
         android:src="@mipmap/yurilane" />
 </FrameLayout>

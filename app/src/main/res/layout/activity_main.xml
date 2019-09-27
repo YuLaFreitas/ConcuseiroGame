@@ -6,27 +6,30 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     tools:context=".MainActivity">
-
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/tool"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
         android:theme="@style/AppTheme.AppBarOverlay">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
         <LinearLayout
             android:id="@+id/btnsFlag4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="250dp">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabImagens"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
+            android:layout_gravity="top|start"
             android:visibility="visible"
             app:srcCompat="@android:drawable/ic_menu_gallery" />
 
@@ -34,30 +37,45 @@
             android:id="@+id/fabTexto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
+            android:layout_gravity="top|start"
             android:visibility="visible"
             app:srcCompat="@android:drawable/ic_menu_sort_alphabetically" />
-    </RelativeLayout>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/textTool"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:textSize="25dp"
+                android:text=""
+                app:layout_anchor="@+id/tool"
+                app:layout_anchorGravity="center" />
+
+
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/gerador"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="top"
+            android:layout_gravity="top|end"
             app:backgroundTint="@color/random"
             app:srcCompat="@android:drawable/ic_menu_rotate" />
-        </LinearLayout>
+        </LinearLayout></FrameLayout>
     </com.google.android.material.appbar.AppBarLayout>
+
     <FrameLayout
         android:id="@+id/frameLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="bottom"
+        android:layout_gravity="start"
         android:visibility="invisible">
         <include  layout="@layout/fragment_tela_imagem" />
     </FrameLayout>
+
     <androidx.appcompat.widget.ActionMenuView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:visibility="visible"
         android:layout_marginTop="55dp"
@@ -68,5 +86,7 @@
             layout="@layout/content_main"
             />
     </androidx.appcompat.widget.ActionMenuView>
+
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
