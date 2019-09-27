@@ -1,20 +1,34 @@
 package com.ferramentateoc.vidaconcurseiro;
 
+import android.animation.TimeInterpolator;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
+import android.transition.Slide;
+import android.util.AttributeSet;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
+import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toolbar;
+import android.widget.ViewSwitcher;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.transition.Transition;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -33,10 +47,46 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(saved);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(final Bundle onSaveInstanceState) {
         super.onCreate(onSaveInstanceState);
-        setContentView(R.layout.capa);  }
+        setContentView(R.layout.capa);
+
+        /*Animation animation = new TranslateAnimation(0, 10, 0, 0);
+        LayoutInflater.Factory fator = new LayoutInflater.Factory() {
+            @Override
+            public View onCreateView(String name, Context context, AttributeSet attrs) {
+                return null;
+            }
+        };
+
+        Slide slide = new Slide();
+        slide.setSlideEdge(Gravity.getAbsoluteGravity(500,500));
+        slide.setDuration(10);
+        ValueAnimator valueAnimator = new ValueAnimator();
+        TimeInterpolator timeInterpolator = valueAnimator.getInterpolator();
+        slide.setInterpolator(timeInterpolator);
+
+        slide.getTargetIds().add( R.mipmap.slide1);
+        slide.getTargetIds().add( R.mipmap.slide2);
+        slide.getTargetIds().add( R.mipmap.slide3);
+        slide.getTargetIds().add( R.mipmap.slide4);
+        slide.getTargetIds().add( R.mipmap.slide5);
+*/
+       ImageView img = findViewById(R.id.imagemMostrar);
+       img.setImageResource(R.mipmap.slide1);
+/*
+       img.setImageURI();
+        img.setImageResource(R.mipmap.slide2);
+        img.setImageResource(R.mipmap.slide3);
+        img.setImageResource(R.mipmap.slide4);
+        img.setImageResource(R.mipmap.slide5);
+        img.setInAnimation(animation);
+        img.setInAnimation(animation);
+        img.setFactory((ViewSwitcher.ViewFactory) fator);*/
+
+    }
 
     //É chamado pelo onCliclk
     public void comecar() {
